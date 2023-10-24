@@ -25,11 +25,34 @@ long long multiply(long long a, long long b) {
 }
 
 
-int main() {
+static void Benchmarknormalexponent(benchmark::State& state) {
+    for (auto _ : state) {
+        for (long long  i = 0; i < state.range(0); i++)
+        {
+            
+            multiply(666,i);
+        }
+        
+    }
+}
+static void BenchmarkForBinaryExpo(benchmark::State& state) {
+    for (auto _ : state) {
+        for (long long  i = 0; i < state.range(0); i++)
+        {
+            
+            binpow(666,i);
+        }
+    }
+}
+BENCHMARK(BenchmarkForBinaryExpo)->Range(1,10000);
+BENCHMARK(Benchmarknormalexponent)->Range(1,10000);
 
-    cout << binpow(666, 5) << endl;
-    cout << multiply(666, 5) << endl;
-	
+//BENCHMARK_MAIN();
+
+int main(int argc, char** argv) {
+
+        benchmark::Initialize(&argc, argv);
+        benchmark::RunSpecifiedBenchmarks();
 	
 	
 	return 0;
